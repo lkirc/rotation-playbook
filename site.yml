@@ -1,0 +1,20 @@
+---
+- name: Rotate passwords
+  hosts: all
+
+  vars_prompt:
+    - name: password
+      prompt: Please enter a new password to be used throughout your hosts
+      private: yes
+      encrypt: sha512_crypt
+      confirm: yes
+      salt_size: 8
+
+  tasks:
+    - debug:
+        msg: "Rotating password for {{ lookup('env', 'USER') }}"
+
+    - ansible.builtin.user:
+        name: "{{ lookup('env', 'USER') }}"
+        password: "{{ password }}"
+      become: yes
