@@ -12,7 +12,7 @@
 
   tasks:
     - debug:
-        msg: "Rotating password for {{ lookup('env', 'USER') }}"
+        msg: "Rotating password for {{ ansible_ssh_user }}"
 
     - ansible.builtin.user:
         name: "{{ ansible_ssh_user }}"
