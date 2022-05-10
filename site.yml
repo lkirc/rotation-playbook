@@ -6,7 +6,6 @@
     - name: password
       prompt: Please enter a new password to be used throughout your hosts
       private: yes
-      encrypt: sha512_crypt
       confirm: yes
       salt_size: 8
 
@@ -16,5 +15,5 @@
 
     - ansible.builtin.user:
         name: "{{ ansible_ssh_user }}"
-        password: "{{ password }}"
+        password: "{{ password | password_hash('sha512') }}"
       become: yes
